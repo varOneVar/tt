@@ -15,6 +15,7 @@ export default {
   data () {
     return {
       locale: zhCN,
+      xxx: 'asd'
     }
   },
   mounted () {
