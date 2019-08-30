@@ -4,6 +4,12 @@
 ### 技术栈
 * vue-antd-pro + egg + mysql
 
+### 服务端
+  - 登陆可以session或token， session使用egg-session, token使用node-jsonwebtoken,推荐token，扩展性好，与多项目合作也好处理
+
+### 客户端
+  - `@vue-cli` [环境变量文件.env,环境变量 必须以VUE_APP_开头](https://cli.vuejs.org/zh/guide/mode-and-env.html#%E6%A8%A1%E5%BC%8F)
+
 ### 远程仓库
 * [github](https://github.com/varOneVar/tt)
 
