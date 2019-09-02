@@ -14,6 +14,7 @@
         </right-panel>
       </div>
     </div>
+    <el-backtop target=".scrollbar-wrapper" />
   </el-scrollbar>
 </template>
 
