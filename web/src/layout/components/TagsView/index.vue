@@ -100,21 +100,26 @@ export default {
       }
     },
     addTags() {
-      const { name } = this.$route
+      const { name, meta, fullPath, path, query } = this.$route
       if (name) {
-        this.$store.dispatch('tagsView/addView', this.$route)
+        this.$store.dispatch('tagsView/addView', {
+          name, meta, fullPath, path, query
+        })
       }
       return false
     },
     moveToCurrentTag() {
       const tags = this.$refs.tag
+      const { name, meta, fullPath, path, query } = this.$route
       this.$nextTick(() => {
         for (const tag of tags) {
-          if (tag.to.path === this.$route.path) {
+          if (tag.to.path === path) {
             this.$refs.scrollPane.moveToTarget(tag)
             // when query is different then update
-            if (tag.to.fullPath !== this.$route.fullPath) {
-              this.$store.dispatch('tagsView/updateVisitedView', this.$route)
+            if (tag.to.fullPath !== fullPath) {
+              this.$store.dispatch('tagsView/updateVisitedView', {
+                name, meta, fullPath, path, query
+              })
             }
             break
           }

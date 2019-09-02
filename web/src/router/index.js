@@ -37,6 +37,7 @@ import nestedRouter from './modules/nested'
  * constantRoutes
  * a base page that does not have permission requirements
  * all roles can be accessed
+ * 所有用户都能访问的基本页面
  */
 export const constantRoutes = [
   {
@@ -127,6 +128,7 @@ export const constantRoutes = [
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
+ * 根据用户身份动态加载路由
  */
 export const asyncRoutes = [
   {
@@ -373,7 +375,7 @@ export const asyncRoutes = [
   },
 
   {
-    path: 'external-link',
+    path: '/external-link',
     component: Layout,
     children: [
       {
@@ -398,6 +400,7 @@ const router = createRouter()
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter()
+  // matcher提供两个属性，match和addRouter，重新赋值使新路由生效
   router.matcher = newRouter.matcher // reset router
 }
 

@@ -2,7 +2,7 @@
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
       <keep-alive :include="cachedViews">
-        <router-view :key="key" />
+        <router-view :key="key" v-loading="workBenchLoading" />
       </keep-alive>
     </transition>
   </section>
@@ -17,6 +17,9 @@ export default {
     },
     key() {
       return this.$route.path
+    },
+    workBenchLoading() {
+      return this.$store.state.app.workBenchLoading
     }
   }
 }

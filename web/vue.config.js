@@ -65,11 +65,11 @@ module.exports = {
   chainWebpack(config) {
     config.resolve.alias
       .set('@', resolve('src'))
-      .set('@components', resolves('src/components'))
-      .set('@views', resolves('src/views'))
-      .set('@api', resolves('src/api'))
-      .set('@config', resolves('src/config'))
-      .set('@utils', resolves('src/utils'))
+      .set('@components', resolve('src/components'))
+      .set('@views', resolve('src/views'))
+      .set('@api', resolve('src/api'))
+      .set('@config', resolve('src/config'))
+      .set('@utils', resolve('src/utils'))
 
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test

@@ -1,6 +1,6 @@
-import Vue from 'vue'
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
+import { ERR_STATUS_MSG } from '@/variable-config'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
@@ -8,30 +8,23 @@ import { getToken } from '@/utils/auth'
 const service = axios.create({
   baseURL: process.env.VUE_APP_API_BASE_URL, // api base_url
   timeout: 8e3, // 请求超时时间
-  withCredentials: true,
-  validateStatus(status) { // 当前范围内的状态码会进response，其他进err
-    return status >= 200 && status <= 304
-  }
+  withCredentials: true
 })
 
 // 请求错误统一处理
 const err = error => {
   if (error.response) {
-    if (error.response.status === 403) {
-      Message({
-        message: '禁止访问!',
-        type: 'error',
-        duration: 5 * 1000
-      })
+    const state = error.response.status
+    if (state in ERR_STATUS_MSG) {
+      Message(ERR_STATUS_MSG[state])
     }
     if (error.response.status === 401) {
-
       MessageBox.confirm('登陆凭证失效', '提示', {
         confirmButtonText: '重新登陆',
         type: 'error',
         closeOnclickModal: false,
         showClose: false,
-        showCancelButton: false,
+        showCancelButton: false
       }).then(() => {
         store.dispatch('user/resetToken').then(() => {
           location.reload()
@@ -65,7 +58,7 @@ const removePending = ({ url, method }) => {
 service.interceptors.request.use(config => {
   // token
   if (store.getters.token) {
-    config.headers['Access-Token'] = getToken(); // 让每个请求携带自定义 token 请根据实际情况自行修改
+    config.headers['Access-Token'] = getToken() // 让每个请求携带自定义 token 请根据实际情况自行修改
   }
 
   // loading动画
@@ -107,11 +100,11 @@ service.interceptors.request.use(config => {
 
 // response interceptor
 service.interceptors.response.use(response => {
-  const { status, config, data, data: { msg } } = response
+  const { status, config, data, data: { msg }} = response
   removePending(config)
   store.commit('app/toggleWholePageLoading', false)
   store.commit('app/toggleWorkBenchLoading', false)
-  if (status === 200 && status === 304) {
+  if (status === 200) {
     return data
   }
   Message({
@@ -119,18 +112,8 @@ service.interceptors.response.use(response => {
     type: 'error',
     duration: 5 * 1000
   })
-  
+
   return response
 }, err)
 
-const installer = {
-  vm: {},
-  install(Vue) {
-    Vue.use(VueAxios, service)
-  }
-}
-
-export {
-  installer as VueAxios,
-  service as axios
-}
+export default service

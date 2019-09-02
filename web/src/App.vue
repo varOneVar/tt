@@ -1,11 +1,16 @@
 <template>
-  <div id="app">
+  <div id="app" v-loading="wholePageLoading">
     <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  computed: {
+    wholePageLoading() {
+      return this.$store.state.app.wholePageLoading
+    }
+  }
 }
 </script>

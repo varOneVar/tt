@@ -1,14 +1,15 @@
-const chokidar = require('chokidar')
+const chokidar = require('chokidar') // 监听文件改变，发生变化卸载接口路由重新注册
 const bodyParser = require('body-parser')
-const chalk = require('chalk')
+const chalk = require('chalk') // 输出增色插件
 const path = require('path')
 
+// process.cwd() node命令执行时所在文件目录， __dirname是始终是被执行文件所在文件目录
 const mockDir = path.join(process.cwd(), 'mock')
 
 function registerRoutes(app) {
   let mockLastIndex
   const { default: mocks } = require('./index.js')
-  for (const mock of mocks) {
+  for (const mock of mocks) { 
     app[mock.type](mock.url, mock.response)
     mockLastIndex = app._router.stack.length
   }
@@ -20,8 +21,12 @@ function registerRoutes(app) {
 }
 
 function unregisterRoutes() {
+  // 在Node.js中，require.cache对象具有一个“键名/键值”结构，键名为每个模块的完整文件名，键值为各模块对象
+  // 加载一个模块会，会缓存，再次调用直接返回缓存对象
   Object.keys(require.cache).forEach(i => {
     if (i.includes(mockDir)) {
+      // 在Node.js中，可以使用require.resolve函数来查询某个模块文件的带有完整绝对路径的文件名
+      // 使用require.resolve函数查询模块文件名时并不会加载该模块
       delete require.cache[require.resolve(i)]
     }
   })

@@ -19,6 +19,11 @@ import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
 
+import moment from 'moment'
+import 'moment/locale/zh-cn'
+moment.locale('zh-cn')
+// let r = moment().endOf('day').fromNow();
+// console.log(r);
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -28,18 +33,22 @@ import * as filters from './filters' // global filters
  * please remove it before going online! ! !
  */
 import { mockXHR } from '../mock'
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'development') {
   mockXHR()
 }
 
+// size为各个组件的size
 Vue.use(Element, {
-  size: Cookies.get('size') || 'medium' // set element-ui default size
+  size: Cookies.get('size') || 'small' // set element-ui default size
 })
 
 // register global utility filters
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
+
+import global from './global'
+global.protoBind(Vue)
 
 Vue.config.productionTip = false
 

@@ -53,6 +53,10 @@ a:hover {
   text-decoration: none;
 }
 
+button, input, optgroup, select, textarea {
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
 div:focus {
   outline: none;
 }
@@ -80,7 +84,21 @@ div:focus {
 .pointer {
   cursor: pointer;
 }
-
+.bold {
+  font-weight: bold;
+}
+.nowrap {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+/*ie与火狐不支持 https://caniuse.com/#search=-webkit-line-clamp*/
+.multiple-nowrap {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
 .inlineBlock {
   display: block;
 }
@@ -94,6 +112,35 @@ div:focus {
     clear: both;
     height: 0;
   }
+}
+
+.flex {
+  display: flex;
+}
+.flex1 {
+  flex: 1;
+}
+.flex-column {
+  flex: column;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-bt {
+  @extend .flex;
+  justify-content: space-between;
+}
+.flex-align-center {
+  @extend .flex;
+  align-items: center;
+}
+.flex-bt-c {
+  @extend .flex-align-center;
+  justify-content: space-between;
+}
+.flex-center {
+  @extend .flex-align-center;
+  justify-content: center;
 }
 
 aside {
@@ -188,4 +235,11 @@ aside {
 
 .multiselect--active {
   z-index: 1000 !important;
+}
+
+.el-scrollbar {
+  height: 100%;
+  .scrollbar-wrapper {
+    overflow-x: hidden !important;
+  }
 }

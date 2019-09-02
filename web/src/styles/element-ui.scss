@@ -77,3 +77,18 @@
 .el-range-editor.el-input__inner {
   display: inline-flex !important;
 }
+
+.el-table__body-wrapper {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #f0f6ff;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rbga(144, 147, 153, 0.3);
+    border-radius: 6px;
+  }
+}
